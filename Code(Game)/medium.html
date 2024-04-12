@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Medium Difficulty</title>
+
+  <link rel="icon" type="image/png" href="Imgs/skyfall-high-resolution-logo-color-on-transparent-background.png">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    #pauseIcon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      color: white; /* Set pause icon color to white */
+    }
+
+    #pausePopup {
+      display: none;
+      position: fixed;
+      top: 50%; /* Center vertically */
+      left: 50%; /* Center horizontally */
+      transform: translate(-50%, -50%); /* Center the popup */
+      width: 200px; /* Set the popup width */
+      background: gray; /* White background with transparency */
+      text-align: center;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .button {
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+      padding: 10px 40px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: #0055CC;
+    }
+    #restart{
+      padding: 10px 43px;
+    }
+    #exit{
+      padding: 10px 53px;
+    }
+    #play_again{
+      background-color: #333;
+      color: white;
+      border-radius: 5px;
+      padding: 10px 30px;
+      cursor: pointer;
+      border: none;
+    }
+    #next{
+      background-color: #333;
+      color: white;
+      border-radius: 5px;
+      padding: 10px 40px; 
+      cursor: pointer;
+      border: none;
+    }
+    #play_again:hover{
+      background: #0055CC;
+    }
+    #next:hover{
+      background: #0055CC;
+    }
+    .achievementBooster ,.achievementWonderballs,.achievementZoomer {
+      position: absolute;
+      left: 50%; /* Center horizontally */
+      top: 20px;
+      transform: translateX(-50%); /* Center horizontally */
+      background-color: white;
+      padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-right: 20px;
+      display: none;
+    }
+    .nextLevelPopup {
+      text-align: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nextLevelPopup p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 16px;
+    }
+    
+    .nextLevelPopup button {
+      background-color: #0055CC;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin: 5px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .nextLevelPopup button:hover {
+      background-color: #003F7F;
+    }
+  </style>
+  <audio id="paddleSound" src="test-songs\318241-Video_game_accent_-gaining_point.mp3"></audio>
+<audio id="redBallSound" src="test-songs\redball.mp3"></audio>
+<audio id="goldenBallSound" src="test-songs\bonus (1).mp3"></audio>
+<audio id="gameOverSound" src="test-songs\Game-over.mp3"></audio>
+<audio id="500PointsSound" src="test-songs\level-up2.mp3"></audio>
+<audio id="losepoints" src="test-songs\roblox-death-sound-effect.mp3"></audio>
+<audio id="start" src="test-songs/marimba-bloop-2-188149.mp3"></audio>
+</head>
+<body>
+  <div class="achievementBooster" id="achievementBooster">
+    <p>Achievement Unlocked: Booster!</p>
+  </div>
+  <div class="achievementWonderballs" id="achievementWonderballs">
+    <p>Achievement Unlocked: Wonder balls!</p>
+  </div>
+  <div class="achievementZoomer">
+    <p>Achievement Unlocked:Zoomer!</p>
+  </div>
+  <div class="nextLevelPopup" id="nextLevelPopup" style="display: none;">
+    <p>Congratulations! You've reached 750 points. Do you want to proceed to the next level?</p>
+    <button id="nextLevelYes">Yes</button>
+    <button id="nextLevelNo">No</button>
+  </div>
+  <script>
+    let balls = [];
+    let paddle;
+    let score = 0;
+    let lives = 3; // Number of lives
+    let isPaused = false; // Variable to track the game's paused state
+    let achievementTimeout;
+
+    function showPopup() {
+      var popup = document.querySelector('.achievementZoomer');
+      popup.style.display = 'block';
+      
+      document.getElementById('start').play();
+      // Automatically close the popup after 3 seconds
+      setTimeout(function() {
+        popup.style.display = 'none';
+      }, 3000);
+    }
+
+    // Show the popup when the page is loaded
+    window.onload = showPopup;
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      paddle = new Paddle();
+      createPauseIcon();
+    }
+
+    document.addEventListener("visibilitychange", function(){
+      if (document.hidden) {
+        // Tab is hidden or minimized
+        togglePause();
+      } 
+    });
+
+    let achievementPopupShown = false;
+    let achievementPopupShown2 = false;
+
+    let nextLevelPopupShown = false;
+
+    function draw() {
+      background(0);
+
+      if (lives <= 0) {
+        // Game over when there are no more lives
+        gameOver();
+      } else if (isPaused) {
+        // Display the pause popup
+        displayPausePopup();
+      } else {
+        // Normal game logic when not paused
+        if (score >= 750 && !nextLevelPopupShown) {
+          showNextLevelPopup();
+          nextLevelPopupShown = true;
+        }
+
+        // Spawn a new ball at the top of the canvas
+        if (frameCount % 45 === 0 && balls.length < 15) {
+          const shapes = [
+            {color: color(255, 0, 0), shape: 'circle'},
+            {color: color(0, 255, 0), shape: 'rectangle'},
+            {color: color(255), shape: 'triangle'},
+            {color: color(0, 0, 255), shape: 'trefoil'}, // Blue
+            {color: color(255, 255, 0), shape: 'kite'}, // Yellow
+            {color: color(128, 0, 128), shape: 'ring'} // Purple
+          ]; 
+          const selectedShape = random(shapes);
+          const ball = {
+            x: random(width),
+            y: -20,
+            dx: 0,
+            dy: 4, // Set the vertical speed to 3
+            color: selectedShape.color,
+            shape: selectedShape.shape,
+            w: 15,
+          };
+          balls.push(ball);
+        }
+
+        // Move and draw each ball
+        for (let i = 0; i < balls.length; i++) {
+          balls[i].x += balls[i].dx;
+          balls[i].y += balls[i].dy;
+
+          // Check if a ball is below the canvas
+          if (balls[i].y > height) {
+            balls.splice(i, 1);
+          }
+
+          // Check for collisions with the paddle
+          if (paddle.hits(balls[i])) {
+            handleCollision(balls[i]);
+            balls.splice(i, 1);
+          } else {
+            drawShape(balls[i]);
+          }
+        }
+
+        // Update and display the paddle
+        paddle.display();
+        paddle.update(mouseX);
+
+        // Display the score and remaining lives
+        fill(255);
+        textSize(24);
+        text("Score: " + score, 20, 30);
+        text("Lives: " + lives, 20, 60);
+      }
+    }
+
+   function handleCollision(ball) {
+  // Adjust the score based on the color and shape of the ball
+  if (ball.color.levels[0] === 255 && ball.color.levels[1] === 255 && ball.color.levels[2] === 0) {
+    // Red ball, lose a life
+    lives--;
+  } else if (ball.color.levels[0] === 0 && ball.color.levels[1] === 255 && ball.color.levels[2] === 0) {
+    // Green ball, plus 20 points
+    score += 20;
+    if (score >= 500 && !achievementPopupShown) {
+      showAchievementPopup();
+      achievementPopupShown = true;
+    }
+    else if(score >= 1000 && !achievementPopupShown2){
+      showAchievementPopup2();
+      achievementPopupShown2=true;
+    }
+    // Play the slideSound when a green ball is hit
+    // slideSound.play(); // Comment out or remove this line
+  } else if (ball.color.levels[0] === 255 && ball.color.levels[1] === 255 && ball.color.levels[2] === 255) {
+    // White ball, plus 10 points
+    score += 10;
+  } else if (ball.color.levels[0] === 0 && ball.color.levels[1] === 0 && ball.color.levels[2] === 255) {
+    // Blue ball, plus 35 points
+    score += 50;
+  } else if (ball.color.levels[0] === 255 && ball.color.levels[1] === 0 && ball.color.levels[2] === 0) {
+    // Yellow ball (kite), plus 25 points
+    score += 25;
+  } else if (ball.color.levels[0] === 128 && ball.color.levels[1] === 0 && ball.color.levels[2] === 128) {
+    // Purple ball (ring), minus 20 points
+    score -= 20;
+  } 
+}
+
+
+  function drawShape(ball) {
+  fill(ball.color);
+
+  // Handle green and white balls as circles
+  if (
+    (ball.color.levels[0] === 0 && ball.color.levels[1] === 255 && ball.color.levels[2] === 0) ||
+    (ball.color.levels[0] === 255 && ball.color.levels[1] === 255 && ball.color.levels[2] === 255)
+  ) {
+    circle(ball.x, ball.y, ball.w);
+  } else {
+    // Handle other shapes
+    switch (ball.shape) {
+      case 'rectangle':
+        rect(ball.x - ball.w / 2, ball.y - ball.w / 2, ball.w, ball.w);
+        break;
+      case 'triangle':
+        triangle(ball.x, ball.y - ball.w / 2, ball.x - ball.w / 2, ball.y + ball.w / 2, ball.x + ball.w / 2, ball.y + ball.w / 2);
+        break;
+      case 'trefoil':
+        // Custom trefoil shape
+        trefoil(ball.x, ball.y, ball.w);
+        break;
+      case 'kite':
+        // Custom kite shape
+        kite(ball.x, ball.y, ball.w);
+        break;
+      case 'ring':
+        // Change the size of the semi-circle for the purple ball
+        arc(ball.x, ball.y, ball.w * 2, ball.w, PI, 0, PIE);
+        break;
+
+      default:
+        // Default to circle for unknown shapes
+        circle(ball.x, ball.y, ball.w);
+    }
+  }
+}
+  function trefoil(x, y, size) { 
+    beginShape();
+      for (let angle = 0; angle < TWO_PI; angle += 0.1) {
+        let radius = size * cos(3 * angle);
+        let xPos = x + radius * cos(angle);
+        let yPos = y + radius * sin(angle);
+        vertex(xPos, yPos);
+      }
+    endShape(CLOSE);
+  }
+
+    function kite(x, y, size) {
+      beginShape();
+      vertex(x, y - size);
+      vertex(x - size / 2, y);
+      vertex(x, y + size);
+      vertex(x + size / 2, y);
+      endShape(CLOSE);
+    }
+
+    function ring(x, y, size) {
+      ellipse(x, y, size * 2, size * 2);
+    }
+
+    class Paddle {
+      constructor() {
+        this.w = 100;
+        this.h = 10;
+        this.x = width / 2 - this.w / 2;
+        this.y = height - 20;
+      }
+
+      display() {
+        fill(255);
+        rect(this.x, this.y, this.w, this.h);
+      }
+
+      update(mouseX) {
+        this.x = mouseX - this.w / 2;
+        this.x = constrain(this.x, 0, width - this.w);
+      }
+
+      hits(ball) {
+        let hit=false;
+        if(
+          ball.x >= this.x &&
+          ball.x <= this.x + this.w &&
+          ball.y >= this.y &&
+          ball.y <= this.y + this.h
+        ){
+          console.log("Collision with paddle detected"); // Log that a collision with the paddle is detected
+          if (!ball.alreadyHit) {
+            if (red(ball.color) === 255 && green(ball.color) === 255 && blue(ball.color) === 0) {
+              // Red ball, play redBallSound and lose a life
+              document.getElementById('redBallSound').play();
+              hit = true; // Set hit flag to true
+            } 
+            
+            else if (red(ball.color) === 0 && green(ball.color) === 255 && blue(ball.color) === 0) {
+              // Green ball, play paddleSound and add score
+              document.getElementById('paddleSound').play();
+            //score += 20; // Green ball, plus 20 points
+              hit = true; // Set hit flag to true
+            } 
+            
+            else if (red(ball.color) === 255 && green(ball.color) === 255 && blue(ball.color) === 255) {
+              // White ball, play paddleSound and add score
+              document.getElementById('paddleSound').play();
+            // score += 10; // White ball, plus 10 points
+              hit = true; // Set hit flag to true
+            } 
+            
+            else if (ball.color.levels[0] === 128 && ball.color.levels[1] === 0 && ball.color.levels[2] === 128)
+            {
+              document.getElementById('losepoints').play();
+              hit = true; // Set hit flag to true
+            }
+            else {
+              // Other color ball, play paddleSound and add score
+              document.getElementById('paddleSound').play();
+              //score += 20; // Or any other logic for scoring
+              hit = true; // Set hit flag to true
+            }
+            ball.alreadyHit = true;
+            // Mark the ball as already hit
+          }
+        } else {
+          ball.alreadyHit = false; 
+          // Reset alreadyHit flag if the ball is no longer colliding
+      }
+      return hit;
+      }
+    }
+
+    let pauseIcon;
+
+    function createPauseIcon() {
+      pauseIcon = createDiv('||'); // The "||" symbol typically represents pause
+      pauseIcon.id('pauseIcon');
+      pauseIcon.mousePressed(togglePause);
+    }
+
+    function togglePause() {
+      isPaused = !isPaused;
+    }
+
+    let pausePopup;
+
+    function displayPausePopup() {
+      // Check if the pausePopup already exists
+      if (!pausePopup) {
+        // Create a container for the popup
+        pausePopup = createDiv('');
+        pausePopup.id('pausePopup');
+        pausePopup.style('display', 'block');
+
+        // Add a "Paused" message
+        let pausedMessage = createDiv('Paused');
+        pausedMessage.style('font-size', '24px');    
+        pausedMessage.style('margin-bottom', '20px');
+        pausedMessage.parent(pausePopup);
+
+        // Add a "Resume" button
+        let resumeButton = createButton('Resume');
+        resumeButton.class('button');
+        resumeButton.id('resume');
+        resumeButton.mousePressed(resumeGame);
+        resumeButton.parent(pausePopup);
+
+        // Add a "Restart" button
+        let restartButton = createButton('Restart');
+        restartButton.class('button');
+        restartButton.id('restart');
+        restartButton.mousePressed(restartGame);
+        restartButton.parent(pausePopup);
+
+        // Add an "Exit" button
+        let exitButton = createButton('Exit');
+        exitButton.class('button');
+        exitButton.id('exit');
+        exitButton.mousePressed(exitGame);
+        exitButton.parent(pausePopup);
+      }
+    }
+
+    function resumeGame() {
+      isPaused = false;
+      if (pausePopup) {
+        pausePopup.remove();
+        pausePopup = null;
+      }
+    }
+
+    function restartGame() {
+      isPaused = false;
+      if (pausePopup) {
+        pausePopup.remove();
+        pausePopup = null;
+      }
+      score = 0;
+      balls = [];
+      lives=3;
+      selectAll('button').forEach(button => button.remove());
+      selectAll('.achievementBooster').forEach(popup => popup.remove());
+      selectAll('.achievementWonderballs').forEach(popup=>popup.remove());
+    }
+    function showNextLevelPopup() {
+      let nextLevelPopup = document.getElementById("nextLevelPopup");
+      nextLevelPopup.style.display = "block";
+
+      // Add event listeners to the "Yes" and "No" buttons
+      document.getElementById("nextLevelYes").addEventListener("click", goToNextLevel);
+      document.getElementById("nextLevelNo").addEventListener("click", hideNextLevelPopup);
+
+      // Play sound effect
+      document.getElementById('500PointsSound').play();
+    }
+
+    function goToNextLevel() {
+      window.location.href = "hard.html"; // Redirect to the desired URL
+    }
+
+    function hideNextLevelPopup() {
+      document.getElementById("nextLevelPopup").style.display = "none";
+    }
+
+    function exitGame(){
+      window.location.href="homepage.php";
+    }
+
+    function gameOver() {
+      textFont('Press Start 2P');
+      textSize(36);
+      
+      // Play game over sound
+      document.getElementById('gameOverSound').play();
+
+      let form = document.createElement('form');
+      let store_score =score;
+      
+      form.method = 'post';
+      form.action = 'save_score.php'; // Change to the actual server endpoint
+
+      // Add hidden input fields for user data
+      form.innerHTML += '<input type="hidden" name="Score" value="' + store_score + '">';
+      form.innerHTML += '<input type="hidden" name="Difficulty" value="Medimum">';
+
+      // Add the form to the document
+      document.body.appendChild(form);
+
+      // Submit the form when the user interacts with it
+      function submitForm() {
+        form.submit();
+      }
+      
+      let form2=document.createElement('form');
+      let hi_score=score;
+
+      form2.method='POST';
+      form2.action='hi_score.php';
+
+      form2.innerHTML +='<input type="hidden" name="hi_score" value="' + hi_score + '">';
+      form2.innerHTML += '<input type="hidden" name="Difficulty" value="Medium">';
+
+      document.body.appendChild(form2);
+
+      // Submit the form when the user interacts with it
+      function submitForm2() {
+        form2.submit();
+      }
+
+
+      let gameOverTextX = 700; // Set the X-coordinate in pixels
+      let gameOverTextY = 350; // Set the Y-coordinate in pixels
+      text("Game Over", gameOverTextX, gameOverTextY);
+
+      textSize(24);
+      let finalScoreTextX = 700; // Set the X-coordinate in pixels
+      let finalScoreTextY = 400; // Set the Y-coordinate in pixels
+      text("Final Score: " + score, finalScoreTextX, finalScoreTextY);
+
+      // Create a "Restart" button
+      let Play_Again = createButton('Play Again');
+      Play_Again.id('play_again');
+      Play_Again.position(650, 450); 
+      Play_Again.mousePressed(restartGame);
+
+      // Create a "Next" button
+      let nextButton = createButton('Next');
+      nextButton.id('next');
+      nextButton.position(810, 450); 
+      nextButton.mousePressed(function() {
+        exitGame();
+        submitForm();
+        submitForm2();
+      });
+    }
+
+    function showAchievementPopup() {
+      let achievementPopup = select("#achievementBooster");
+      achievementPopup.style('display', 'block');
+      clearTimeout(achievementTimeout);
+      achievementTimeout = setTimeout(function () {
+        achievementPopup.style('display', 'none');
+      }, 3000);
+    }
+    function showAchievementPopup2() {
+      let achievementPopup = select("#achievementWonderballs");
+      achievementPopup.style('display', 'block');
+      clearTimeout(achievementTimeout);
+      achievementTimeout = setTimeout(function () {
+        achievementPopup.style('display', 'none');
+      }, 3000);
+    }
+    
+  </script>
+</body>
+</html>

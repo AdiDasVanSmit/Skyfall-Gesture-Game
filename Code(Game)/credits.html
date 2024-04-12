@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <link rel="icon" type="image/png" href="Imgs/skyfall-high-resolution-logo-color-on-transparent-background.png">
+
+    <title>SKYFALL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .marquee {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .marquee-content {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            animation: marquee-scroll 30s linear infinite;
+        }
+
+        @keyframes marquee-scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .developer {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .developer:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .developer h2 {
+            color: #333;
+        }
+
+        .developer p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body background="Imgs/CoarseBothInvisiblerail.webp">
+    <div class="container">
+        <h1>Credits</h1>
+        <div class="marquee">
+            <div class="marquee-content">
+                <div class="developer">
+                    <h2>Devicharan Dasari (92100938019)</h2>
+                    <p>Authentication and Interface Developer</p>
+                    <p>Devicharan's responsibility in developing components related to user authentication, such as login systems, as well as designing and implementing the user interface for the home page and security sections of the game.</p>
+                </div>
+                <div class="developer">
+                    <h2>Adityaraj Chudasma (92100938023)</h2>
+                    <p>Game Designer</p>
+                    <p>Adityaraj specializes in designing intuitive user interfaces and exciting game mechanics.Adityaraj's showing interest understanding of game mechanics enables him to design gameplay elements that are both challenging and rewarding, keeping players engaged and entertained.</p>
+                </div>
+                <div class="developer">
+                <h2>Smit Rudakiya (92100938029)</h2>
+                <p>Main Gesture Logic Developer</p>
+                    <p>Smit is the mastermind behind the gesture recognition system, ensuring smooth and accurate gameplay interactions.Smit's contributions to the gesture recognition system have been instrumental in creating an engaging and dynamic gaming environment for players to enjoy.</p>
+                </div>
+                <div class="developer">
+                    <h2>Vandit Doshi (92100938050)</h2>
+                    <p>Game Designer</p>
+                    <p>Vandit specializes in designing intuitive user interfaces and exciting game mechanics.Vandit's showing interest understanding of game mechanics enables him to design gameplay elements that are both challenging and rewarding, keeping players engaged and entertained.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
