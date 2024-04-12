@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net" modified="2023-09-22T14:59:14.073Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="aeT7GVE5blMEaiLxtc-o" version="21.8.0" type="device">
+  <diagram name="Page-1" id="PU_c60jd7S7n71gDq2II">
+    <mxGraphModel dx="750" dy="838" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-2" value="Server" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="170" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-3" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer_with_Server.svg;" vertex="1" parent="1">
+          <mxGeometry x="360" y="370" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-4" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer_with_Server.svg;" vertex="1" parent="1">
+          <mxGeometry x="590" y="188.8" width="61.2" height="61.2" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-5" value="Database" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="360" y="-10" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.01;exitY=0.491;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-3" target="cfTcbd-NDsjdgRPGgub1-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="440" as="sourcePoint" />
+            <mxPoint x="190" y="390" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="190" y="401" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-8" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.8;exitY=0.8;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.16;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="230.00000000000006" y="254.4000000000001" as="sourcePoint" />
+            <mxPoint x="372.2" y="379.98400000000004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.04;exitY=0.738;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="589.998" y="204.06560000000022" as="sourcePoint" />
+            <mxPoint x="240" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.501;exitY=0.11;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.85;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-2" target="cfTcbd-NDsjdgRPGgub1-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="90" as="sourcePoint" />
+            <mxPoint x="190" y="40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-12" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.752;entryY=0.192;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.246;exitY=0.988;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-5" target="cfTcbd-NDsjdgRPGgub1-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="170" as="sourcePoint" />
+            <mxPoint x="330" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.85;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.029;entryY=0.247;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-5" target="cfTcbd-NDsjdgRPGgub1-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="80" as="sourcePoint" />
+            <mxPoint x="490" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=1.032;entryY=0.566;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-4" target="cfTcbd-NDsjdgRPGgub1-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="60" as="sourcePoint" />
+            <mxPoint x="530" y="10" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="620" y="30" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-15" value="Player" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="360" y="438" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-16" value="Admin" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="590" y="248" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-17" value="Register Account" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="205" y="398" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-18" value="Successfully &lt;br&gt;Registered" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="280" y="278" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-20" value="Send Registered/Login&lt;br&gt;&amp;nbsp;Info" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="140" y="90" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-21" value="Sent &lt;br&gt;Successfully" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="265" y="123" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-22" value="View&amp;nbsp;&lt;br&gt;Player&#39;s Info" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="610" y="100" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-23" value="View &lt;br&gt;Successfully" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="460" y="123" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-25" value="Admin Login" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="380" y="175" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-26" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.935;exitY=0.589;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.011;entryY=0.685;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cfTcbd-NDsjdgRPGgub1-2" target="cfTcbd-NDsjdgRPGgub1-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="280" as="sourcePoint" />
+            <mxPoint x="330" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cfTcbd-NDsjdgRPGgub1-27" value="Successfully Logged In" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="360" y="205" width="150" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
