@@ -1,0 +1,56 @@
+
+body {
+			background-color: #1b1b1e;
+			font-family: 'Ubuntu', sans-serif;
+		}
+		header {
+			background-color: yellow;
+			color: black;
+			text-align: center;
+			padding: 20px;
+		}
+		h1 {
+			margin: 0;
+			font-size: 2em;
+			font-weight: bold;
+		}
+		main {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: white;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+		section {
+			margin-bottom: 20px;
+			padding: 10px;
+			background-color: #F0F0F0;
+			border-radius: 5px;
+		}
+		h2 {
+			margin-top: 0;
+			font-size: 1.5em;
+			font-weight: bold;
+			display: inline-block;
+		}
+		.answer {
+			display: none;
+			margin: 10px 0;
+			font-size: 1.2em;
+			line-height: 1.5;
+		}
+		.arrow {
+			display: inline-block;
+			float: right;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 5px 0 5px 5px;
+			border-color: transparent transparent transparent #0072C6;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+		.arrow.collapsed {
+			border-width: 5px 5px 5px 0;
+			border-color: transparent #0072C6 transparent transparent;
+		}
